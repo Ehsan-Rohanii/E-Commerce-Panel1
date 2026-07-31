@@ -1,12 +1,12 @@
 import React from "react";
-import Pages from "../Pages";
 import Navbar from "../Components/Navbar";
+import SideBar from "../Components/SideBar";
 
 export default function Layout() {
   return (
     <>
       <Navbar />
-      <Pages />
+      <SideBar />
     </>
   );
 }

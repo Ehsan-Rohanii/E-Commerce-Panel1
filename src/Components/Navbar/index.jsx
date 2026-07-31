@@ -1,8 +1,6 @@
 // components/common/Navbar.jsx
-'use client';
-
-import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
@@ -16,27 +14,21 @@ import {
   Container,
   Tooltip,
   Badge,
-  Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Divider,
   useMediaQuery,
   useTheme,
   Fade,
   Stack,
   Chip,
-  Paper,
-  alpha,
-} from '@mui/material';
+  TextField,
+  InputAdornment,
+  Divider,
+  ListItemIcon,
+} from "@mui/material";
 import {
   Menu as MenuIcon,
   Home,
-  Article,
   Category,
-  Comment,
-  Dashboard,
+  ShoppingCart,
   Person,
   Logout,
   Login,
@@ -47,187 +39,229 @@ import {
   Notifications,
   Settings,
   AdminPanelSettings,
-  KeyboardArrowDown,
-  Close,
-  AutoAwesome,
-  Stars,
-} from '@mui/icons-material';
-import { styled } from '@mui/material/styles';
-import { ColorModeContext } from '../../App';
-import Users from '../../Pages/Users';
+  Favorite,
+  Storefront,
+  Dashboard,
+  Receipt,
+  Discount,
+  BrandingWatermark,
+} from "@mui/icons-material";
+import { styled } from "@mui/material/styles";
+import { ColorModeContext } from "../../App";
 
-// استایل‌های سفارشی
-const StyledAppBar = styled(AppBar)(({ theme, scrolled }) => ({
-  position: 'sticky',
+const StyledAppBar = styled(AppBar, {
+  shouldForwardProp: (prop) => prop !== "scrolled",
+})(({ theme, scrolled }) => ({
+  position: "sticky",
   elevation: scrolled ? 4 : 0,
-  backgroundColor: scrolled 
-    ? theme.palette.mode === 'dark' 
-      ? 'rgba(18, 18, 18, 0.92)' 
-      : 'rgba(255, 255, 255, 0.92)'
-    : theme.palette.mode === 'dark'
-      ? 'rgba(18, 18, 18, 0.98)'
-      : 'rgba(255, 255, 255, 0.98)',
-  backdropFilter: 'blur(20px)',
-  borderBottom: scrolled 
-    ? 'none' 
-    : `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(102, 126, 234, 0.08)'}`,
-  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-  boxShadow: scrolled 
-    ? `0 4px 30px ${theme.palette.mode === 'dark' ? 'rgba(0,0,0,0.3)' : 'rgba(0, 0, 0, 0.08)'}` 
-    : 'none',
+  backgroundColor: theme.palette.mode === "dark" ? "#0a0a0a" : "#ffffff",
+  backdropFilter: "blur(20px)",
+  borderBottom: scrolled
+    ? "none"
+    : `1px solid ${theme.palette.mode === "dark" ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"}`,
+  transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+  boxShadow: scrolled
+    ? `0 4px 30px ${theme.palette.mode === "dark" ? "rgba(0,0,0,0.5)" : "rgba(255,140,0,0.15)"}`
+    : "none",
+  direction: "rtl",
+  color: theme.palette.mode === "dark" ? "#ffffff" : "#000000",
 }));
 
 const LogoText = styled(Typography)(({ theme }) => ({
   fontWeight: 800,
-  cursor: 'pointer',
-  display: 'flex',
-  alignItems: 'center',
-  fontSize: '1.5rem',
-  letterSpacing: '-0.5px',
-  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
-  backgroundSize: '200% 200%',
-  backgroundClip: 'text',
-  WebkitBackgroundClip: 'text',
-  WebkitTextFillColor: 'transparent',
-  animation: 'gradientShift 4s ease-in-out infinite',
-  '@keyframes gradientShift': {
-    '0%, 100%': { backgroundPosition: '0% 50%' },
-    '50%': { backgroundPosition: '100% 50%' },
+  cursor: "pointer",
+  display: "flex",
+  alignItems: "center",
+  fontSize: "1.5rem",
+  letterSpacing: "-0.5px",
+  color: theme.palette.mode === "dark" ? "#ffffff" : "#000000",
+  "&:hover": {
+    transform: "scale(1.02)",
+    transition: "transform 0.3s ease",
   },
-  '&:hover': {
-    transform: 'scale(1.02)',
-    transition: 'transform 0.3s ease',
-  },
+  flexShrink: 0,
 }));
 
-const NavButton = styled(Button)(({ theme, active }) => ({
-  color: active ? '#667eea' : theme.palette.text.secondary,
+const NavButton = styled(Button, {
+  shouldForwardProp: (prop) => prop !== "active",
+})(({ theme, active }) => ({
+  color: active
+    ? "#FF8C00"
+    : theme.palette.mode === "dark"
+      ? "rgba(255,255,255,0.7)"
+      : "rgba(0,0,0,0.6)",
   fontWeight: active ? 600 : 500,
-  position: 'relative',
-  borderRadius: '12px',
-  padding: '8px 20px',
-  textTransform: 'none',
-  fontSize: '0.95rem',
-  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-  '&::before': {
+  position: "relative",
+  borderRadius: "12px",
+  padding: "8px 16px",
+  textTransform: "none",
+  fontSize: "0.9rem",
+  transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+  minWidth: "auto",
+  "&::before": {
     content: '""',
-    position: 'absolute',
+    position: "absolute",
     bottom: 4,
-    left: '50%',
-    transform: active ? 'translateX(-50%) scaleX(1)' : 'translateX(-50%) scaleX(0)',
-    width: '30%',
+    left: "50%",
+    transform: active
+      ? "translateX(-50%) scaleX(1)"
+      : "translateX(-50%) scaleX(0)",
+    width: "30%",
     height: 3,
-    background: 'linear-gradient(90deg, #667eea, #764ba2)',
+    background: "linear-gradient(90deg, #FF6F00, #FF8C00, #FFA726)",
     borderRadius: 4,
-    transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+    transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
   },
-  '&:hover': {
-    color: '#667eea',
-    backgroundColor: alpha('#667eea', theme.palette.mode === 'dark' ? 0.15 : 0.06),
-    transform: 'translateY(-1px)',
-    '&::before': {
-      transform: 'translateX(-50%) scaleX(1)',
+  "&:hover": {
+    color: theme.palette.mode === "dark" ? "#ffffff" : "#000000",
+    backgroundColor:
+      theme.palette.mode === "dark"
+        ? "rgba(255,255,255,0.08)"
+        : "rgba(0,0,0,0.04)",
+    transform: "translateY(-1px)",
+    "&::before": {
+      transform: "translateX(-50%) scaleX(1)",
     },
   },
-  '& .MuiButton-startIcon': {
-    marginRight: 8,
+  "& .MuiButton-startIcon": {
+    marginLeft: 6,
+    marginRight: 0,
   },
 }));
 
-const AdminButton = styled(Button)(({ theme, active }) => ({
-  color: '#ff9800',
+const AdminButton = styled(Button, {
+  shouldForwardProp: (prop) => prop !== "active",
+})(({ theme, active }) => ({
+  color: "#FF8C00",
   fontWeight: active ? 600 : 500,
-  backgroundColor: active ? alpha('#ff9800', 0.12) : 'transparent',
-  borderRadius: '12px',
-  padding: '8px 20px',
-  textTransform: 'none',
-  fontSize: '0.95rem',
-  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-  '&:hover': {
-    backgroundColor: alpha('#ff9800', 0.15),
-    transform: 'translateY(-1px)',
-    boxShadow: '0 4px 15px rgba(255, 152, 0, 0.2)',
+  backgroundColor: active ? "rgba(255,140,0,0.15)" : "transparent",
+  borderRadius: "12px",
+  padding: "8px 16px",
+  textTransform: "none",
+  fontSize: "0.9rem",
+  transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+  minWidth: "auto",
+  "&:hover": {
+    backgroundColor: "rgba(255,140,0,0.2)",
+    transform: "translateY(-1px)",
+    boxShadow: "0 4px 15px rgba(255,140,0,0.2)",
   },
-  '& .MuiButton-startIcon': {
-    marginRight: 8,
+  "& .MuiButton-startIcon": {
+    marginLeft: 6,
+    marginRight: 0,
   },
 }));
 
 const ActionIconButton = styled(IconButton)(({ theme }) => ({
-  color: theme.palette.text.secondary,
-  padding: 8,
-  borderRadius: '12px',
-  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-  '&:hover': {
-    color: '#667eea',
-    backgroundColor: alpha('#667eea', theme.palette.mode === 'dark' ? 0.15 : 0.08),
-    transform: 'scale(1.05)',
+  color:
+    theme.palette.mode === "dark" ? "rgba(255,255,255,0.6)" : "rgba(0,0,0,0.4)",
+  padding: 6,
+  borderRadius: "12px",
+  transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+  "&:hover": {
+    color: theme.palette.mode === "dark" ? "#ffffff" : "#000000",
+    backgroundColor:
+      theme.palette.mode === "dark"
+        ? "rgba(255,255,255,0.08)"
+        : "rgba(0,0,0,0.04)",
+    transform: "scale(1.05)",
   },
 }));
 
 const StyledAvatar = styled(Avatar)(({ theme }) => ({
-  width: 38,
-  height: 38,
-  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-  cursor: 'pointer',
-  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-  border: '2px solid transparent',
-  '&:hover': {
-    transform: 'scale(1.08)',
-    borderColor: '#667eea',
-    boxShadow: '0 4px 20px rgba(102, 126, 234, 0.3)',
+  width: 34,
+  height: 34,
+  background: "linear-gradient(135deg, #FF6F00 0%, #FF8C00 50%, #FFA726 100%)",
+  cursor: "pointer",
+  transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+  border: "2px solid transparent",
+  "&:hover": {
+    transform: "scale(1.08)",
+    borderColor: "#FF8C00",
+    boxShadow: "0 4px 20px rgba(255,140,0,0.3)",
   },
 }));
 
 const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
-  borderRadius: '12px',
-  margin: '4px 8px',
-  padding: '10px 16px',
-  transition: 'all 0.2s ease',
-  '&:hover': {
-    backgroundColor: alpha('#667eea', theme.palette.mode === 'dark' ? 0.15 : 0.06),
-    transform: 'translateX(4px)',
+  borderRadius: "12px",
+  margin: "4px 8px",
+  padding: "10px 16px",
+  transition: "all 0.2s ease",
+  color:
+    theme.palette.mode === "dark" ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)",
+  "&:hover": {
+    backgroundColor:
+      theme.palette.mode === "dark"
+        ? "rgba(255,255,255,0.08)"
+        : "rgba(0,0,0,0.04)",
+    transform: "translateX(-4px)",
+  },
+  "& .MuiListItemIcon-root": {
+    minWidth: 36,
+    marginLeft: 8,
+    marginRight: 0,
+    color:
+      theme.palette.mode === "dark"
+        ? "rgba(255,255,255,0.6)"
+        : "rgba(0,0,0,0.4)",
   },
 }));
 
-export default function Navbar() {
+export default function Navbar({ onMenuClick }) {
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isSmallMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const colorMode = useContext(ColorModeContext);
-  
+
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElNotifications, setAnchorElNotifications] = useState(null);
-  const [drawerOpen, setDrawerOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [admin, setAdmin] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const cartCount = 3;
 
   useEffect(() => {
-    const userData = localStorage.getItem('user');
-    if (userData) {
-      try {
-        const parsedUser = JSON.parse(userData);
-        setUser(parsedUser);
-        setLoggedIn(true);
-        setAdmin(parsedUser.role === 'admin');
-      } catch (error) {
-        console.error('Error parsing user:', error);
+    const loadUserData = () => {
+      const userData = localStorage.getItem("user");
+      if (userData) {
+        try {
+          const parsedUser = JSON.parse(userData);
+          setUser(parsedUser);
+          setLoggedIn(true);
+          setAdmin(parsedUser.role === "admin");
+        } catch (error) {
+          console.error("Error parsing user:", error);
+        }
       }
-    }
+    };
+
+    loadUserData();
 
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+
+    const handleStorageChange = (e) => {
+      if (e.key === "user") {
+        loadUserData();
+      }
+    };
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("storage", handleStorageChange);
+    };
   }, []);
 
   const handleNavigate = (path) => {
     navigate(path);
-    setDrawerOpen(false);
     handleCloseUserMenu();
   };
 
@@ -248,13 +282,13 @@ export default function Navbar() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setLoggedIn(false);
     setUser(null);
     setAdmin(false);
     handleCloseUserMenu();
-    navigate('/');
+    navigate("/");
   };
 
   const toggleDarkMode = () => {
@@ -265,467 +299,450 @@ export default function Navbar() {
     return location.pathname === path;
   };
 
+  const isDark = theme.palette.mode === "dark";
+
+  // 🔍 SEARCH: تابع جستجو
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchQuery("");
+    }
+  };
+
+  const getUserInitial = () => {
+    if (!user) return "U";
+    const name = user.fullName || user.fullname || user.name || user.username || "";
+    return name.charAt(0)?.toUpperCase() || "U";
+  };
+
+  const getFullName = () => {
+    if (!user) return "کاربر";
+    return user.fullName || user.fullname || user.name || user.username || "کاربر";
+  };
+
   const menuItems = [
-    { text: 'کاربران', icon:<Category />, path: '/users' },
-    { text: 'دسته‌بندی‌ها', icon: <Category />, path: '/categories' },
-    { text: 'پست‌ها', icon: <Article />, path: '/posts' },
-    { text: 'خانه', icon: <Home />, path: '/home' },
+    { text: "خانه", icon: <Home />, path: "/" },
+    { text: "محصولات", icon: <Category />, path: "/products" },
+    { text: "دسته‌بندی‌ها", icon: <Category />, path: "/categories" },
+    { text: "برند ها", icon: <BrandingWatermark />, path: "/brands" },
+    { text: "فروش ویژه", icon: <Discount />, path: "/sales" },
   ];
-
-  const adminMenuItems = [
-    { text: 'داشبورد', icon: <Dashboard />, path: '/admin' },
-    { text: 'مدیریت پست‌ها', icon: <Article />, path: '/admin/posts' },
-    { text: 'مدیریت دسته‌بندی‌ها', icon: <Category />, path: '/admin/categories' },
-    { text: 'مدیریت کامنت‌ها', icon: <Comment />, path: '/admin/comments' },
-    { text: 'مدیریت کاربران', icon: <Person />, path: '/admin/users' },
-  ];
-
-  const userMenuItems = [
-    { text: 'پروفایل', icon: <Person />, path: '/profile' },
-    { text: 'تنظیمات', icon: <Settings />, path: '/settings' },
-  ];
-
-  const isDark = theme.palette.mode === 'dark';
-
-  const drawerList = () => (
-    <Box sx={{ width: 300 }} role="presentation">
-      <Box sx={{ 
-        p: 3, 
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        color: 'white',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        borderTopLeftRadius: 24,
-        borderTopRightRadius: 24,
-      }}>
-        <Box>
-          <Typography variant="h6" sx={{ fontWeight: 700 }}>
-            وبلاگ من
-          </Typography>
-          {loggedIn && user && (
-            <Typography variant="body2" sx={{ mt: 0.5, opacity: 0.85 }}>
-              خوش آمدی، {user.username}
-            </Typography>
-          )}
-        </Box>
-        <IconButton onClick={() => setDrawerOpen(false)} sx={{ color: 'white' }}>
-          <Close />
-        </IconButton>
-      </Box>
-      <Divider />
-      <List sx={{ px: 1, py: 1 }}>
-        {menuItems.map((item) => (
-          <ListItem 
-            key={item.text}
-            onClick={() => handleNavigate(item.path)}
-            sx={{ 
-              cursor: 'pointer',
-              borderRadius: 2,
-              mb: 0.5,
-              bgcolor: isActivePath(item.path) ? alpha('#667eea', 0.08) : 'transparent',
-              '&:hover': { 
-                bgcolor: alpha('#667eea', 0.06),
-                transform: 'translateX(4px)',
-                transition: 'all 0.2s ease',
-              },
-              '& .MuiListItemIcon-root': {
-                color: isActivePath(item.path) ? '#667eea' : 'inherit',
-                minWidth: 40,
-              },
-            }}
-          >
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText 
-              primary={item.text} 
-              sx={{
-                '& .MuiTypography-root': {
-                  fontWeight: isActivePath(item.path) ? 600 : 400,
-                  color: isActivePath(item.path) ? '#667eea' : 'inherit',
-                }
-              }}
-            />
-          </ListItem>
-        ))}
-      </List>
-      
-      {admin && (
-        <>
-          <Divider />
-          <Box sx={{ px: 2, py: 1.5 }}>
-            <Chip 
-              label="بخش مدیریت" 
-              size="medium"
-              icon={<AdminPanelSettings />}
-              sx={{ 
-                bgcolor: alpha('#ff9800', 0.1),
-                color: '#ff9800',
-                fontWeight: 600,
-                width: '100%',
-                justifyContent: 'flex-start',
-                borderRadius: 2,
-                '& .MuiChip-icon': { color: '#ff9800' }
-              }}
-            />
-          </Box>
-          <List sx={{ px: 1 }}>
-            {adminMenuItems.map((item) => (
-              <ListItem 
-                key={item.text}
-                onClick={() => handleNavigate(item.path)}
-                sx={{ 
-                  pl: 4, 
-                  cursor: 'pointer',
-                  borderRadius: 2,
-                  mb: 0.5,
-                  bgcolor: isActivePath(item.path) ? alpha('#667eea', 0.08) : 'transparent',
-                  '&:hover': { 
-                    bgcolor: alpha('#667eea', 0.06),
-                    transform: 'translateX(4px)',
-                    transition: 'all 0.2s ease',
-                  },
-                }}
-              >
-                <ListItemIcon sx={{ 
-                  color: isActivePath(item.path) ? '#667eea' : 'inherit',
-                  minWidth: 40,
-                }}>
-                  {item.icon}
-                </ListItemIcon>
-                <ListItemText 
-                  primary={item.text}
-                  sx={{
-                    '& .MuiTypography-root': {
-                      fontWeight: isActivePath(item.path) ? 600 : 400,
-                      color: isActivePath(item.path) ? '#667eea' : 'inherit',
-                    }
-                  }}
-                />
-              </ListItem>
-            ))}
-          </List>
-        </>
-      )}
-
-      {loggedIn && (
-        <>
-          <Divider />
-          <List sx={{ px: 1 }}>
-            {userMenuItems.map((item) => (
-              <ListItem 
-                key={item.text}
-                onClick={() => handleNavigate(item.path)}
-                sx={{ 
-                  cursor: 'pointer',
-                  borderRadius: 2,
-                  mb: 0.5,
-                  '&:hover': { 
-                    bgcolor: alpha('#667eea', 0.06),
-                    transform: 'translateX(4px)',
-                    transition: 'all 0.2s ease',
-                  },
-                }}
-              >
-                <ListItemIcon sx={{ minWidth: 40 }}>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.text} />
-              </ListItem>
-            ))}
-            <ListItem 
-              onClick={handleLogout} 
-              sx={{ 
-                cursor: 'pointer',
-                borderRadius: 2,
-                '&:hover': { 
-                  bgcolor: alpha('#f44336', 0.08),
-                  transform: 'translateX(4px)',
-                  transition: 'all 0.2s ease',
-                },
-              }}
-            >
-              <ListItemIcon sx={{ minWidth: 40 }}><Logout sx={{ color: '#f44336' }} /></ListItemIcon>
-              <ListItemText primary="خروج" sx={{ color: '#f44336' }} />
-            </ListItem>
-          </List>
-        </>
-      )}
-    </Box>
-  );
 
   return (
     <StyledAppBar position="sticky" scrolled={scrolled}>
-      <Container maxWidth="xl">
-        <Toolbar disableGutters sx={{ height: 72, display: 'flex', alignItems: 'center' , gap: 1}}>
-          
-          {/* ===== بخش چپ: دکمه همبرگری (فقط موبایل) ===== */}
-          <Box sx={{ display: 'flex', alignItems: 'center', minWidth: 'fit-content' }}>
+      <Container maxWidth="xl" sx={{ px: { xs: 1, sm: 2, md: 3 } }}>
+        <Toolbar
+          disableGutters
+          sx={{
+            height: { xs: 64, sm: 68, md: 72 },
+            display: "flex",
+            alignItems: "center",
+            gap: { xs: 0.5, sm: 1 },
+            direction: "rtl",
+            justifyContent: "space-between",
+          }}
+        >
+          {/* بخش چپ - دکمه همبرگری و لوگو */}
+          <Box sx={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
             {isMobile && (
-              <ActionIconButton onClick={() => setDrawerOpen(true)}>
+              <ActionIconButton
+                onClick={onMenuClick}
+                sx={{ ml: { xs: 0, sm: 0.5 } }}
+              >
                 <MenuIcon />
               </ActionIconButton>
             )}
-          </Box>
-          {loggedIn ? (
-              <>
-                <Tooltip title="حساب کاربری" arrow>
-                  <StyledAvatar onClick={handleOpenUserMenu}>
-                    {user?.username?.charAt(0)?.toUpperCase() || 'U'}
-                  </StyledAvatar>
-                </Tooltip>
-                <Menu
-                  anchorEl={anchorElUser}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                  transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-                  TransitionComponent={Fade}
-                  PaperProps={{
-                    sx: {
-                      mt: 1.5,
-                      borderRadius: 3,
-                      minWidth: 240,
-                      boxShadow: '0 8px 40px rgba(0,0,0,0.12)',
-                      overflow: 'hidden',
-                    }
-                  }}
-                >
-                  <Box sx={{ 
-                    p: 2.5, 
-                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                    color: 'white',
-                  }}>
-                    <Typography variant="subtitle1" fontWeight={700}>
-                      {user?.username}
-                    </Typography>
-                    <Typography variant="caption" sx={{ opacity: 0.85 }}>
-                      {user?.role === 'admin' ? 'مدیر سیستم' : 'کاربر'}
-                    </Typography>
-                    {user?.role === 'admin' && (
-                      <Chip 
-                        label="ادمین" 
-                        size="small"
-                        sx={{ 
-                          mt: 1,
-                          bgcolor: 'rgba(255,255,255,0.2)',
-                          color: 'white',
-                          fontWeight: 600,
-                          borderRadius: 1,
-                        }}
-                      />
-                    )}
-                  </Box>
-                  <Divider />
-                  <StyledMenuItem onClick={() => handleNavigate('/profile')}>
-                    <ListItemIcon><Person fontSize="small" /></ListItemIcon>
-                    پروفایل
-                  </StyledMenuItem>
-                  <StyledMenuItem onClick={() => handleNavigate('/settings')}>
-                    <ListItemIcon><Settings fontSize="small" /></ListItemIcon>
-                    تنظیمات
-                  </StyledMenuItem>
-                  {admin && (
-                    <StyledMenuItem onClick={() => handleNavigate('/admin')}>
-                      <ListItemIcon><Dashboard fontSize="small" /></ListItemIcon>
-                      داشبورد
-                    </StyledMenuItem>
-                  )}
-                  <Divider />
-                  <StyledMenuItem onClick={handleLogout} sx={{ color: '#f44336' }}>
-                    <ListItemIcon><Logout fontSize="small" sx={{ color: '#f44336' }} /></ListItemIcon>
-                    خروج
-                  </StyledMenuItem>
-                </Menu>
-              </>
-            ) : (
-              <Stack direction="row" spacing={1} sx={{ ml: 1 }}>
-                <Button 
-                  onClick={() => handleNavigate('/login')} 
-                  variant="outlined" 
-                  size="small"
-                  sx={{
-                    borderRadius: 3,
-                    textTransform: 'none',
-                    borderColor: '#667eea',
-                    color: '#667eea',
-                    px: 2.5,
-                    py: 0.8,
-                    fontWeight: 600,
-                    '&:hover': {
-                      borderColor: '#764ba2',
-                      bgcolor: alpha('#667eea', 0.05),
-                      transform: 'translateY(-1px)',
-                      boxShadow: '0 4px 15px rgba(102, 126, 234, 0.2)',
-                    },
-                    transition: 'all 0.3s ease',
-                  }}
-                >
-                  ورود
-                </Button>
-                <Button 
-                  onClick={() => handleNavigate('/register')} 
-                  variant="contained" 
-                  size="small"
-                  sx={{
-                    borderRadius: 3,
-                    textTransform: 'none',
-                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                    px: 2.5,
-                    py: 0.8,
-                    fontWeight: 600,
-                    boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)',
-                    '&:hover': {
-                      boxShadow: '0 6px 25px rgba(102, 126, 234, 0.4)',
-                      transform: 'translateY(-2px)',
-                    },
-                    transition: 'all 0.3s ease',
-                  }}
-                >
-                  ثبت‌نام
-                </Button>
-              </Stack>
-            )}
-            <ActionIconButton onClick={handleOpenNotifications}>
-              <Badge 
-                badgeContent={3} 
-                color="error"
+
+            <LogoText
+              onClick={() => handleNavigate("/")}
+              sx={{
+                fontSize: { xs: "1.1rem", sm: "1.3rem", md: "1.5rem" },
+                "& .MuiSvgIcon-root": {
+                  fontSize: { xs: "1.2rem", sm: "1.5rem", md: "1.8rem" },
+                },
+              }}
+            >
+              <Storefront
                 sx={{
-                  '& .MuiBadge-badge': {
-                    fontSize: '0.6rem',
-                    minWidth: 18,
-                    height: 18,
-                    borderRadius: '50%',
-                    background: 'linear-gradient(135deg, #f44336, #e91e63)',
-                  }
+                  mr: 0.5,
+                  color: "#FF8C00",
                 }}
-              >
-                <Notifications />
-              </Badge>
-            </ActionIconButton>
-            
-            <ActionIconButton onClick={toggleDarkMode}>
-              {isDark ? <LightMode /> : <DarkMode />}
-            </ActionIconButton>
-            
-            <ActionIconButton onClick={() => handleNavigate('/search')}>
-              <Search />
-            </ActionIconButton>
+              />
+              {!isSmallMobile && "فروشگاه من"}
+              {isSmallMobile && "فروشگاه"}
+            </LogoText>
+          </Box>
 
-            {/*  */}
-
-
-          {/* ===== بخش وسط: منو (فقط دسکتاپ) ===== */}
+          {/* بخش وسط - منوی دسکتاپ */}
           {!isMobile && (
-            <Box sx={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: 0.5, 
-              flex: 1, 
-              justifyContent: 'center' 
-            }}>
-              {admin && (
-                <AdminButton
-                  onClick={() => handleNavigate('/admin')}
-                  startIcon={<AdminPanelSettings />}
-                  active={isActivePath('/admin') ? 1 : 0}
-                >
-                  مدیریت
-                </AdminButton>
-              )}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 0.5,
+                flex: 1,
+                justifyContent: "center",
+                direction: "rtl",
+                mx: 2,
+              }}
+            >
               {menuItems.map((item) => (
                 <NavButton
                   key={item.text}
                   onClick={() => handleNavigate(item.path)}
                   startIcon={item.icon}
                   active={isActivePath(item.path) ? 1 : 0}
+                  sx={{
+                    px: { md: 1.5, lg: 2 },
+                    fontSize: { md: "0.85rem", lg: "0.95rem" },
+                  }}
                 >
                   {item.text}
                 </NavButton>
               ))}
+
+              {/* 🔍 SEARCH: بخش جستجو - فقط دسکتاپ */}
+              <Box
+                component="form"
+                onSubmit={handleSearch}
+                sx={{
+                  mx: 1,
+                  minWidth: { md: 150, lg: 200 },
+                  maxWidth: { md: 200, lg: 300 },
+                  flex: 1,
+                }}
+              >
+                <TextField
+                  size="small"
+                  placeholder="جستجو..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  fullWidth
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: 3,
+                      backgroundColor: isDark
+                        ? "rgba(255,255,255,0.05)"
+                        : "rgba(0,0,0,0.03)",
+                      "& fieldset": {
+                        borderColor: isDark
+                          ? "rgba(255,255,255,0.1)"
+                          : "rgba(0,0,0,0.1)",
+                      },
+                      "&:hover fieldset": {
+                        borderColor: isDark
+                          ? "rgba(255,255,255,0.2)"
+                          : "rgba(0,0,0,0.2)",
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: "#FF8C00",
+                      },
+                      "& input": {
+                        color: isDark ? "#ffffff" : "#000000",
+                        fontSize: { md: "0.8rem", lg: "0.9rem" },
+                        padding: "8px 12px",
+                      },
+                    },
+                  }}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Search
+                          sx={{
+                            color: isDark
+                              ? "rgba(255,255,255,0.4)"
+                              : "rgba(0,0,0,0.3)",
+                            fontSize: 18,
+                          }}
+                        />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Box>
+
+              {admin && (
+                <AdminButton
+                  onClick={() => handleNavigate("/admin")}
+                  startIcon={<AdminPanelSettings />}
+                  active={isActivePath("/admin") ? 1 : 0}
+                  sx={{
+                    px: { md: 1.5, lg: 2 },
+                    fontSize: { md: "0.85rem", lg: "0.95rem" },
+                  }}
+                >
+                  مدیریت
+                </AdminButton>
+              )}
             </Box>
           )}
 
-          {/* ===== بخش راست: لوگو + آیکون‌ها + پروفایل ===== */}
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, ml: 'auto' }}>
-            
+          {/* بخش راست - آیکون‌ها */}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: { xs: 0.5, sm: 0.5, md: 1 },
+              flexShrink: 0,
+            }}
+          >
+            {/* 🔍 SEARCH: آیکون جستجو برای موبایل */}
+            {isMobile && (
+              <ActionIconButton
+                onClick={() => navigate("/search")}
+                size="small"
+              >
+                <Search sx={{ fontSize: { xs: 20, sm: 22 } }} />
+              </ActionIconButton>
+            )}
 
-            
+            {/* <ActionIconButton
+              onClick={() => navigate("/wishlist")}
+              size="small"
+            >
+              <Badge
+                badgeContent={5}
+                color="error"
+                sx={{
+                  "& .MuiBadge-badge": {
+                    fontSize: { xs: "0.5rem", sm: "0.6rem" },
+                    minWidth: { xs: 16, sm: 18 },
+                    height: { xs: 16, sm: 18 },
+                    borderRadius: "50%",
+                    backgroundColor: "#f44336",
+                  },
+                }}
+              >
+                <Favorite sx={{ fontSize: { xs: 20, sm: 22, md: 24 } }} />
+              </Badge>
+            </ActionIconButton> */}
 
-            
-            <LogoText onClick={() => handleNavigate('/')}>
-              <Article sx={{ 
-                ml: 1, 
-                color: '#667eea', 
-                WebkitTextFillColor: '#667eea',
-                fontSize: isMobile ? '1.3rem' : '1.8rem',
-              }} />
-              وبلاگ من
-              {!isMobile && (
-                <AutoAwesome sx={{ 
-                  ml: 0.5, 
-                  fontSize: '0.9rem',
-                  color: '#764ba2',
-                  WebkitTextFillColor: '#764ba2',
-                  opacity: 0.6,
-                }} />
+            {/* <ActionIconButton onClick={handleOpenNotifications} size="small">
+              <Badge
+                badgeContent={3}
+                color="error"
+                sx={{
+                  "& .MuiBadge-badge": {
+                    fontSize: { xs: "0.5rem", sm: "0.6rem" },
+                    minWidth: { xs: 16, sm: 18 },
+                    height: { xs: 16, sm: 18 },
+                    borderRadius: "50%",
+                    background: "linear-gradient(135deg, #FF6F00, #FF8C00)",
+                  },
+                }}
+              >
+                <Notifications sx={{ fontSize: { xs: 20, sm: 22, md: 24 } }} />
+              </Badge>
+            </ActionIconButton> */}
+
+            {/* <ActionIconButton onClick={() => navigate("/cart")} size="small">
+              <Badge
+                badgeContent={cartCount}
+                color="error"
+                sx={{
+                  "& .MuiBadge-badge": {
+                    fontSize: { xs: "0.5rem", sm: "0.6rem" },
+                    minWidth: { xs: 16, sm: 18 },
+                    height: { xs: 16, sm: 18 },
+                    borderRadius: "50%",
+                    background: "linear-gradient(135deg, #FF8C00, #FF6F00)",
+                  },
+                }}
+              >
+                <ShoppingCart sx={{ fontSize: { xs: 20, sm: 22, md: 24 } }} />
+              </Badge>
+            </ActionIconButton> */}
+
+            <ActionIconButton
+              onClick={toggleDarkMode}
+              size="small"
+              sx={{ display: { xs: "none", sm: "flex" } }}
+            >
+              {isDark ? (
+                <LightMode sx={{ fontSize: { xs: 20, sm: 22, md: 24 } }} />
+              ) : (
+                <DarkMode sx={{ fontSize: { xs: 20, sm: 22, md: 24 } }} />
               )}
-            </LogoText>
+            </ActionIconButton>
+
+            {loggedIn ? (
+              <>
+                <Tooltip title="حساب کاربری" arrow>
+                  <StyledAvatar
+                    onClick={handleOpenUserMenu}
+                    sx={{
+                      width: { xs: 30, sm: 34, md: 38 },
+                      height: { xs: 30, sm: 34, md: 38 },
+                    }}
+                  >
+                    {getUserInitial()}
+                  </StyledAvatar>
+                </Tooltip>
+                <Menu
+                  anchorEl={anchorElUser}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                  anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                  transformOrigin={{ vertical: "top", horizontal: "left" }}
+                  TransitionComponent={Fade}
+                  PaperProps={{
+                    sx: {
+                      mt: 1.5,
+                      borderRadius: 3,
+                      minWidth: { xs: 220, sm: 260 },
+                      boxShadow: isDark
+                        ? "0 8px 40px rgba(0,0,0,0.5)"
+                        : "0 8px 40px rgba(255,140,0,0.12)",
+                      overflow: "hidden",
+                      direction: "rtl",
+                      bgcolor: isDark ? "#0a0a0a" : "#ffffff",
+                      border: `1px solid ${isDark ? "rgba(255,255,255,0.05)" : "rgba(255,140,0,0.1)"}`,
+                    },
+                  }}
+                >
+                  <Box
+                    sx={{
+                      p: { xs: 2, sm: 2.5 },
+                      background:
+                        "linear-gradient(135deg, #FF6F00 0%, #FF8C00 50%, #FFA726 100%)",
+                      color: "white",
+                    }}
+                  >
+                    <Typography
+                      variant="subtitle1"
+                      fontWeight={700}
+                      fontSize={{ xs: "0.9rem", sm: "1rem" }}
+                    >
+                      {getFullName()}
+                    </Typography>
+                    <Typography variant="caption" sx={{ opacity: 0.85 }}>
+                      {user?.role === "admin" ? "مدیر فروشگاه" : "کاربر"}
+                    </Typography>
+                    {user?.role === "admin" && (
+                      <Chip
+                        label="ادمین"
+                        size="small"
+                        sx={{
+                          mt: 1,
+                          bgcolor: "rgba(255,255,255,0.2)",
+                          color: "white",
+                          fontWeight: 600,
+                          borderRadius: 1,
+                          height: { xs: 20, sm: 24 },
+                          fontSize: { xs: "0.6rem", sm: "0.7rem" },
+                        }}
+                      />
+                    )}
+                  </Box>
+                  <Divider
+                    sx={{
+                      borderColor: isDark
+                        ? "rgba(255,255,255,0.05)"
+                        : "rgba(0,0,0,0.05)",
+                    }}
+                  />
+                  <StyledMenuItem onClick={() => handleNavigate("/profile")}>
+                    <ListItemIcon>
+                      <Person fontSize="small" />
+                    </ListItemIcon>
+                    پروفایل
+                  </StyledMenuItem>
+                  <StyledMenuItem onClick={() => handleNavigate("/orders")}>
+                    <ListItemIcon>
+                      <Receipt fontSize="small" />
+                    </ListItemIcon>
+                    سفارشات من
+                  </StyledMenuItem>
+                  <StyledMenuItem onClick={() => handleNavigate("/wishlist")}>
+                    <ListItemIcon>
+                      <Favorite fontSize="small" />
+                    </ListItemIcon>
+                    علاقه‌مندی‌ها
+                  </StyledMenuItem>
+                  <StyledMenuItem onClick={() => handleNavigate("/settings")}>
+                    <ListItemIcon>
+                      <Settings fontSize="small" />
+                    </ListItemIcon>
+                    تنظیمات
+                  </StyledMenuItem>
+                  {admin && (
+                    <StyledMenuItem onClick={() => handleNavigate("/admin")}>
+                      <ListItemIcon>
+                        <Dashboard fontSize="small" />
+                      </ListItemIcon>
+                      پنل مدیریت
+                    </StyledMenuItem>
+                  )}
+                  <Divider
+                    sx={{
+                      borderColor: isDark
+                        ? "rgba(255,255,255,0.05)"
+                        : "rgba(0,0,0,0.05)",
+                    }}
+                  />
+                  <StyledMenuItem
+                    onClick={handleLogout}
+                    sx={{ color: "#f44336" }}
+                  >
+                    <ListItemIcon>
+                      <Logout fontSize="small" sx={{ color: "#f44336" }} />
+                    </ListItemIcon>
+                    خروج
+                  </StyledMenuItem>
+                </Menu>
+              </>
+            ) : (
+              <Stack direction="row" spacing={0.5} sx={{ mr: 0.5 }}>
+                <Button
+                  onClick={() => handleNavigate("/login")}
+                  variant="outlined"
+                  size="small"
+                  sx={{
+                    borderRadius: 3,
+                    textTransform: "none",
+                    borderColor: isDark ? "rgba(255,255,255,0.2)" : "#FF8C00",
+                    color: isDark ? "rgba(255,255,255,0.8)" : "#FF8C00",
+                    px: { xs: 1.5, sm: 2 },
+                    py: 0.5,
+                    fontWeight: 600,
+                    fontSize: { xs: "0.7rem", sm: "0.8rem" },
+                    "&:hover": {
+                      borderColor: "#FF6F00",
+                      bgcolor: isDark
+                        ? "rgba(255,255,255,0.05)"
+                        : "rgba(255,140,0,0.08)",
+                    },
+                  }}
+                >
+                  {isSmallMobile ? "ورود" : "ورود"}
+                </Button>
+                <Button
+                  onClick={() => handleNavigate("/register")}
+                  variant="contained"
+                  size="small"
+                  sx={{
+                    borderRadius: 3,
+                    textTransform: "none",
+                    background:
+                      "linear-gradient(135deg, #FF6F00, #FF8C00, #FFA726)",
+                    px: { xs: 1.5, sm: 2 },
+                    py: 0.5,
+                    fontWeight: 600,
+                    fontSize: { xs: "0.7rem", sm: "0.8rem" },
+                    boxShadow: "0 4px 15px rgba(255,140,0,0.3)",
+                    "&:hover": {
+                      boxShadow: "0 6px 25px rgba(255,140,0,0.4)",
+                    },
+                  }}
+                >
+                  {isSmallMobile ? "ثبت‌نام" : "ثبت‌نام"}
+                </Button>
+              </Stack>
+            )}
           </Box>
         </Toolbar>
       </Container>
-
-      {/* ===== دراور - از سمت چپ باز میشه ===== */}
-      <Drawer 
-        anchor="left"
-        open={drawerOpen} 
-        onClose={() => setDrawerOpen(false)}
-        PaperProps={{
-          sx: {
-            borderTopRightRadius: 24,
-            borderBottomRightRadius: 24,
-            boxShadow: '4px 0 30px rgba(0,0,0,0.08)',
-          }
-        }}
-      >
-        {drawerList()}
-      </Drawer>
-
-      <Menu
-        anchorEl={anchorElNotifications}
-        open={Boolean(anchorElNotifications)}
-        onClose={handleCloseNotifications}
-        TransitionComponent={Fade}
-        PaperProps={{
-          sx: {
-            mt: 1.5,
-            borderRadius: 3,
-            minWidth: 300,
-            boxShadow: '0 8px 40px rgba(0,0,0,0.12)',
-            overflow: 'hidden',
-          }
-        }}
-      >
-        <Box sx={{ 
-          px: 2.5, 
-          py: 2, 
-          borderBottom: '1px solid',
-          borderColor: 'divider',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}>
-          <Typography variant="subtitle1" fontWeight={700}>اعلان‌ها</Typography>
-          <Chip 
-            label="۳ جدید" 
-            size="small"
-            color="primary"
-            sx={{ borderRadius: 1, fontWeight: 600 }}
-          />
-        </Box>
-        <Box sx={{ p: 2 }}>
-          <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center', py: 3 }}>
-            هیچ اعلان جدیدی وجود ندارد
-          </Typography>
-        </Box>
-      </Menu>
     </StyledAppBar>
   );
 }
