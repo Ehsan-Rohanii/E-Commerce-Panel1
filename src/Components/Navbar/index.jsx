@@ -369,7 +369,7 @@ export default function Navbar({ onMenuClick }) {
                   color: "#FF8C00",
                 }}
               />
-              {!isSmallMobile && "فروشگاه من"}
+              {!isSmallMobile && "پنل فروشگاه من"}
               {isSmallMobile && "فروشگاه"}
             </LogoText>
           </Box>
@@ -516,9 +516,9 @@ export default function Navbar({ onMenuClick }) {
               >
                 <Favorite sx={{ fontSize: { xs: 20, sm: 22, md: 24 } }} />
               </Badge>
-            </ActionIconButton> */}
+            </ActionIconButton>
 
-            {/* <ActionIconButton onClick={handleOpenNotifications} size="small">
+            <ActionIconButton onClick={handleOpenNotifications} size="small">
               <Badge
                 badgeContent={3}
                 color="error"
@@ -534,9 +534,9 @@ export default function Navbar({ onMenuClick }) {
               >
                 <Notifications sx={{ fontSize: { xs: 20, sm: 22, md: 24 } }} />
               </Badge>
-            </ActionIconButton> */}
+            </ActionIconButton>
 
-            {/* <ActionIconButton onClick={() => navigate("/cart")} size="small">
+            <ActionIconButton onClick={() => navigate("/cart")} size="small">
               <Badge
                 badgeContent={cartCount}
                 color="error"
