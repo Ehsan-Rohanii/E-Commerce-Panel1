@@ -1,12 +1,14 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../Layout";
-import Login from "../Pages/Auth/Login";
 import Register from "../Pages/Auth/Register";
-
-import Users from "../Pages/Users";
-import Brands from "../Pages/Brands";
-import Products from "../Pages/Products";
+import LoginOtp from "../Pages/Auth/LoginOtp";
 import Categories from "../Pages/Categories";
+import Brands from "../Pages/Brands";
+import LoginPass from "../Pages/Auth/LoginPass";
+import Login from "../Pages/Auth/Login";
+import Products from "../Pages/Products";
+import Users from "../Pages/Users";
+import Home from "../Pages/Home";
 
 const router = createBrowserRouter([
   {
@@ -18,26 +20,40 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
+    path: "/loginPass",
+    element: <LoginPass />,
+  },
+  {
+    path: "/loginOtp",
+    element: <LoginOtp />,
+  },
+  {
     path: "/",
     element: <Layout />,
     children: [
       {
-        index:true ,
-        element: <Products />,
+        index: true,
+        element:<Home/>
       },
       {
-        path: "/categories",
+        path: "categories",
         element: <Categories />,
       },
       {
-        path: "/brands",
+        path: "brands",
         element: <Brands />,
       },
       {
-        path: "users",
-        element: <Users />,
+        path: "/products",
+        element: <Products />,
+      },
+      {
+        path:"users" ,
+        element:<Users/>
       },
     ],
   },
+
 ]);
+
 export default router;

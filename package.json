@@ -15,6 +15,7 @@
     "@fontsource/vazir": "^4.5.4",
     "@mui/icons-material": "^9.2.0",
     "@mui/material": "^9.2.0",
+    "@mui/x-charts": "^9.10.1",
     "@mui/x-date-pickers": "^9.8.0",
     "@reduxjs/toolkit": "^2.12.0",
     "@tailwindcss/vite": "^4.3.1",
