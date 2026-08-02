@@ -363,15 +363,16 @@ export default function Navbar({ onMenuClick }) {
                 },
               }}
             >
+               {!isSmallMobile && "پنل فروشگاه من"}
+              {isSmallMobile && "فروشگاه"}
+
               <Storefront
                 sx={{
                   mr: 0.5,
                   color: "#FF8C00",
                 }}
               />
-              {!isSmallMobile && "پنل فروشگاه من"}
-              {isSmallMobile && "فروشگاه"}
-            </LogoText>
+                         </LogoText>
           </Box>
 
           {/* بخش وسط - منوی دسکتاپ */}
@@ -391,9 +392,10 @@ export default function Navbar({ onMenuClick }) {
                 <NavButton
                   key={item.text}
                   onClick={() => handleNavigate(item.path)}
-                  startIcon={item.icon}
+                  endIcon={item.icon}
                   active={isActivePath(item.path) ? 1 : 0}
                   sx={{
+                    gap:1,
                     px: { md: 1.5, lg: 2 },
                     fontSize: { md: "0.85rem", lg: "0.95rem" },
                   }}

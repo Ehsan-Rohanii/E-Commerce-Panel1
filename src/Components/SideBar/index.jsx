@@ -321,10 +321,10 @@ export default function SideBar({ open, onClose }) {
     },
     { text: "دسته‌بندی‌ها", icon: <Category />, path: "/categories" },
     {
-      text: "فروش ویژه",
-      icon: <Discount />,
-      path: "/sales",
-      badge: "🔥",
+      text: "برند ها",
+      icon: <Category />,
+      path: "/brands",
+      badge: "3",
     },
     {
       text: "کاربران",
@@ -333,11 +333,19 @@ export default function SideBar({ open, onClose }) {
       badge: "3",
     },
     {
-      text: "علاقه‌مندی‌ها",
-      icon: <Favorite />,
-      path: "/wishlist",
-      badge: "5",
+      text: "فروش ویژه",
+      icon: <Discount />,
+      path: "/sales",
+      badge: "🔥",
     },
+    
+    // {
+    //   text: "علاقه‌مندی‌ها",
+    //   icon: <Favorite />,
+    //   path: "/wishlist",
+    //   badge: "5",
+    // },
+    
   ];
 
   const userMenuItems = [
@@ -610,6 +618,7 @@ export default function SideBar({ open, onClose }) {
               variant="outlined"
               fullWidth
               sx={{
+                gap:1 ,
                 py: 1.2,
                 borderColor: "rgba(255,255,255,0.2)",
                 color: "#fff",
@@ -623,7 +632,7 @@ export default function SideBar({ open, onClose }) {
                 },
                 transition: "all 0.3s ease",
               }}
-              startIcon={<Login />}
+              endIcon={<Login />}
             >
               ورود
             </Button>
@@ -646,7 +655,7 @@ export default function SideBar({ open, onClose }) {
                 },
                 transition: "all 0.3s ease",
               }}
-              startIcon={<AppRegistration />}
+              // endIcon={<AppRegistration />}
             >
               ثبت‌نام
             </Button>
