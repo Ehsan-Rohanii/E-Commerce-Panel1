@@ -9,7 +9,9 @@ import {
   Container,
   useTheme,
   Snackbar,
+  Button, // اضافه کردن Button
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom'; // اضافه کردن useNavigate
 import ProductCard from './ProductCard';
 
 const processProductToCard = (product) => {
@@ -88,6 +90,7 @@ const processProductToCard = (product) => {
 export default function Products() {
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
+  const navigate = useNavigate(); // استفاده از useNavigate
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -308,6 +311,7 @@ export default function Products() {
     setSnackbar(prev => ({ ...prev, open: false }));
   };
 
+
   if (loading) {
     return (
       <Container maxWidth="xl" sx={{ py: 4 }}>
@@ -359,9 +363,32 @@ export default function Products() {
         >
           محصولات
         </Typography>
-        <Typography variant="body2" sx={{ color: isDark ? '#777' : '#999', fontWeight: 500 }}>
-          {totalCount + ' محصول'}
-        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <Typography variant="body2" sx={{ color: isDark ? '#777' : '#999', fontWeight: 500 }}>
+            {totalCount + ' محصول'}
+          </Typography>
+          {/* دکمه ایجاد محصول جدید */}
+          <Button
+            variant="contained"
+            onClick={() => navigate('/createProduct')}
+            sx={{
+              background: 'linear-gradient(135deg, #FF6F00, #FF8C00)',
+              color: '#fff',
+              borderRadius: 2,
+              fontWeight: 700,
+              px: 3,
+              py: 1,
+              '&:hover': {
+                background: 'linear-gradient(135deg, #E65100, #FF6F00)',
+                transform: 'scale(1.02)',
+                boxShadow: '0 4px 20px rgba(255, 140, 0, 0.4)',
+              },
+              transition: 'all 0.2s ease',
+            }}
+          >
+            ✚ محصول جدید
+          </Button>
+        </Box>
       </Box>
 
       {products.length === 0 ? (
