@@ -9,6 +9,13 @@ import Login from "../Pages/Auth/Login";
 import Products from "../Pages/Products";
 import Users from "../Pages/Users";
 import Home from "../Pages/Home";
+import CreateProduct from "../Pages/Products/CreateProduct";
+import CreateCategory from "../Pages/Categories/CreateCategory";
+import CreateBrand from "../Pages/Brands/CreateBrand";
+import Slides from "../Pages/Slides";
+import CreateSlide from "../Pages/Slides/CreateSlide";
+import Discounts from "../Pages/Discount";
+
 
 const router = createBrowserRouter([
   {
@@ -50,6 +57,30 @@ const router = createBrowserRouter([
       {
         path:"users" ,
         element:<Users/>
+      },
+      {
+        path:"/slides" ,
+        element:<Slides/>
+      },
+      {
+        path:"createProduct" ,
+        element:<CreateProduct/>
+      },
+      {
+        path:"/createCategory" ,
+        element:<CreateCategory/>
+      },
+      {
+        path:"/createBrand" ,
+        element:<CreateBrand/>
+      },
+      {
+        path:"/createSlide" ,
+        element:<CreateSlide/>
+      },
+      {
+        path:"/discount" ,
+        element:<Discounts/>
       },
     ],
   },
