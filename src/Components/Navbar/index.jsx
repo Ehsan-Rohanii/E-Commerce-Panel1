@@ -72,7 +72,7 @@ const LogoText = styled(Typography)(({ theme }) => ({
   cursor: "pointer",
   display: "flex",
   alignItems: "center",
-  fontSize: "1.5rem",
+  fontSize: "1.3rem",
   letterSpacing: "-0.5px",
   color: theme.palette.mode === "dark" ? "#ffffff" : "#000000",
   "&:hover": {
@@ -88,26 +88,26 @@ const NavButton = styled(Button, {
   color: active
     ? "#FF8C00"
     : theme.palette.mode === "dark"
-      ? "rgba(255,255,255,0.7)"
-      : "rgba(0,0,0,0.6)",
-  fontWeight: active ? 600 : 500,
+      ? "rgba(255,255,255,0.6)"
+      : "rgba(0,0,0,0.5)",
+  fontWeight: active ? 600 : 400,
   position: "relative",
-  borderRadius: "12px",
-  padding: "8px 16px",
+  borderRadius: "10px",
+  padding: "6px 12px",
   textTransform: "none",
-  fontSize: "0.9rem",
+  fontSize: "0.8rem",
   transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
   minWidth: "auto",
   "&::before": {
     content: '""',
     position: "absolute",
-    bottom: 4,
+    bottom: 2,
     left: "50%",
     transform: active
       ? "translateX(-50%) scaleX(1)"
       : "translateX(-50%) scaleX(0)",
     width: "30%",
-    height: 3,
+    height: 2.5,
     background: "linear-gradient(90deg, #FF6F00, #FF8C00, #FFA726)",
     borderRadius: 4,
     transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
@@ -116,15 +116,15 @@ const NavButton = styled(Button, {
     color: theme.palette.mode === "dark" ? "#ffffff" : "#000000",
     backgroundColor:
       theme.palette.mode === "dark"
-        ? "rgba(255,255,255,0.08)"
-        : "rgba(0,0,0,0.04)",
+        ? "rgba(255,255,255,0.06)"
+        : "rgba(0,0,0,0.03)",
     transform: "translateY(-1px)",
     "&::before": {
       transform: "translateX(-50%) scaleX(1)",
     },
   },
   "& .MuiButton-startIcon": {
-    marginLeft: 6,
+    marginLeft: 4,
     marginRight: 0,
   },
 }));
@@ -133,44 +133,44 @@ const AdminButton = styled(Button, {
   shouldForwardProp: (prop) => prop !== "active",
 })(({ theme, active }) => ({
   color: "#FF8C00",
-  fontWeight: active ? 600 : 500,
-  backgroundColor: active ? "rgba(255,140,0,0.15)" : "transparent",
-  borderRadius: "12px",
-  padding: "8px 16px",
+  fontWeight: active ? 600 : 400,
+  backgroundColor: active ? "rgba(255,140,0,0.12)" : "transparent",
+  borderRadius: "10px",
+  padding: "6px 12px",
   textTransform: "none",
-  fontSize: "0.9rem",
+  fontSize: "0.8rem",
   transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
   minWidth: "auto",
   "&:hover": {
-    backgroundColor: "rgba(255,140,0,0.2)",
+    backgroundColor: "rgba(255,140,0,0.15)",
     transform: "translateY(-1px)",
-    boxShadow: "0 4px 15px rgba(255,140,0,0.2)",
+    boxShadow: "0 4px 15px rgba(255,140,0,0.15)",
   },
   "& .MuiButton-startIcon": {
-    marginLeft: 6,
+    marginLeft: 4,
     marginRight: 0,
   },
 }));
 
 const ActionIconButton = styled(IconButton)(({ theme }) => ({
   color:
-    theme.palette.mode === "dark" ? "rgba(255,255,255,0.6)" : "rgba(0,0,0,0.4)",
-  padding: 6,
-  borderRadius: "12px",
+    theme.palette.mode === "dark" ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.35)",
+  padding: 4,
+  borderRadius: "10px",
   transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
   "&:hover": {
     color: theme.palette.mode === "dark" ? "#ffffff" : "#000000",
     backgroundColor:
       theme.palette.mode === "dark"
-        ? "rgba(255,255,255,0.08)"
-        : "rgba(0,0,0,0.04)",
+        ? "rgba(255,255,255,0.06)"
+        : "rgba(0,0,0,0.03)",
     transform: "scale(1.05)",
   },
 }));
 
 const StyledAvatar = styled(Avatar)(({ theme }) => ({
-  width: 34,
-  height: 34,
+  width: 30,
+  height: 30,
   background: "linear-gradient(135deg, #FF6F00 0%, #FF8C00 50%, #FFA726 100%)",
   cursor: "pointer",
   transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
@@ -183,27 +183,28 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
 }));
 
 const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
-  borderRadius: "12px",
-  margin: "4px 8px",
-  padding: "10px 16px",
+  borderRadius: "10px",
+  margin: "2px 6px",
+  padding: "8px 14px",
   transition: "all 0.2s ease",
+  fontSize: "0.85rem",
   color:
     theme.palette.mode === "dark" ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)",
   "&:hover": {
     backgroundColor:
       theme.palette.mode === "dark"
-        ? "rgba(255,255,255,0.08)"
-        : "rgba(0,0,0,0.04)",
+        ? "rgba(255,255,255,0.06)"
+        : "rgba(0,0,0,0.03)",
     transform: "translateX(-4px)",
   },
   "& .MuiListItemIcon-root": {
-    minWidth: 36,
-    marginLeft: 8,
+    minWidth: 32,
+    marginLeft: 6,
     marginRight: 0,
     color:
       theme.palette.mode === "dark"
-        ? "rgba(255,255,255,0.6)"
-        : "rgba(0,0,0,0.4)",
+        ? "rgba(255,255,255,0.5)"
+        : "rgba(0,0,0,0.35)",
   },
 }));
 
@@ -335,10 +336,10 @@ export default function Navbar({ onMenuClick }) {
         <Toolbar
           disableGutters
           sx={{
-            height: { xs: 64, sm: 68, md: 72 },
+            height: { xs: 60, sm: 64, md: 68 },
             display: "flex",
             alignItems: "center",
-            gap: { xs: 0.5, sm: 1 },
+            gap: { xs: 0.5, sm: 0.5 },
             direction: "rtl",
             justifyContent: "space-between",
           }}
@@ -350,29 +351,28 @@ export default function Navbar({ onMenuClick }) {
                 onClick={onMenuClick}
                 sx={{ ml: { xs: 0, sm: 0.5 } }}
               >
-                <MenuIcon />
+                <MenuIcon sx={{ fontSize: { xs: 22, sm: 24 } }} />
               </ActionIconButton>
             )}
 
             <LogoText
               onClick={() => handleNavigate("/")}
               sx={{
-                fontSize: { xs: "1.1rem", sm: "1.3rem", md: "1.5rem" },
+                fontSize: { xs: "1rem", sm: "1.1rem", md: "1.3rem" },
                 "& .MuiSvgIcon-root": {
-                  fontSize: { xs: "1.2rem", sm: "1.5rem", md: "1.8rem" },
+                  fontSize: { xs: "1.1rem", sm: "1.2rem", md: "1.5rem" },
                 },
               }}
             >
-               {!isSmallMobile && "پنل فروشگاه من"}
+              {!isSmallMobile && "پنل فروشگاه من"}
               {isSmallMobile && "فروشگاه"}
-
               <Storefront
                 sx={{
                   mr: 0.5,
                   color: "#FF8C00",
                 }}
               />
-                         </LogoText>
+            </LogoText>
           </Box>
 
           {/* بخش وسط - منوی دسکتاپ */}
@@ -381,11 +381,11 @@ export default function Navbar({ onMenuClick }) {
               sx={{
                 display: "flex",
                 alignItems: "center",
-                gap: 0.5,
+                gap: 0.3,
                 flex: 1,
                 justifyContent: "center",
                 direction: "rtl",
-                mx: 2,
+                mx: 1,
               }}
             >
               {menuItems.map((item) => (
@@ -395,9 +395,9 @@ export default function Navbar({ onMenuClick }) {
                   endIcon={item.icon}
                   active={isActivePath(item.path) ? 1 : 0}
                   sx={{
-                    gap:1,
-                    px: { md: 1.5, lg: 2 },
-                    fontSize: { md: "0.85rem", lg: "0.95rem" },
+                    gap: 0.5,
+                    px: { md: 1, lg: 1.5 },
+                    fontSize: { md: "0.75rem", lg: "0.8rem" },
                   }}
                 >
                   {item.text}
@@ -409,9 +409,9 @@ export default function Navbar({ onMenuClick }) {
                 component="form"
                 onSubmit={handleSearch}
                 sx={{
-                  mx: 1,
-                  minWidth: { md: 150, lg: 200 },
-                  maxWidth: { md: 200, lg: 300 },
+                  mx: 0.5,
+                  minWidth: { md: 120, lg: 180 },
+                  maxWidth: { md: 180, lg: 250 },
                   flex: 1,
                 }}
               >
@@ -423,27 +423,29 @@ export default function Navbar({ onMenuClick }) {
                   fullWidth
                   sx={{
                     "& .MuiOutlinedInput-root": {
-                      borderRadius: 3,
+                      borderRadius: 2.5,
                       backgroundColor: isDark
-                        ? "rgba(255,255,255,0.05)"
-                        : "rgba(0,0,0,0.03)",
+                        ? "rgba(255,255,255,0.04)"
+                        : "rgba(0,0,0,0.02)",
                       "& fieldset": {
                         borderColor: isDark
-                          ? "rgba(255,255,255,0.1)"
-                          : "rgba(0,0,0,0.1)",
+                          ? "rgba(255,255,255,0.08)"
+                          : "rgba(0,0,0,0.08)",
+                        borderWidth: 1,
                       },
                       "&:hover fieldset": {
                         borderColor: isDark
-                          ? "rgba(255,255,255,0.2)"
-                          : "rgba(0,0,0,0.2)",
+                          ? "rgba(255,255,255,0.15)"
+                          : "rgba(0,0,0,0.15)",
                       },
                       "&.Mui-focused fieldset": {
                         borderColor: "#FF8C00",
+                        borderWidth: 1.5,
                       },
                       "& input": {
                         color: isDark ? "#ffffff" : "#000000",
-                        fontSize: { md: "0.8rem", lg: "0.9rem" },
-                        padding: "8px 12px",
+                        fontSize: { md: "0.7rem", lg: "0.75rem" },
+                        padding: "6px 10px",
                       },
                     },
                   }}
@@ -453,9 +455,9 @@ export default function Navbar({ onMenuClick }) {
                         <Search
                           sx={{
                             color: isDark
-                              ? "rgba(255,255,255,0.4)"
-                              : "rgba(0,0,0,0.3)",
-                            fontSize: 18,
+                              ? "rgba(255,255,255,0.3)"
+                              : "rgba(0,0,0,0.25)",
+                            fontSize: 16,
                           }}
                         />
                       </InputAdornment>
@@ -470,8 +472,8 @@ export default function Navbar({ onMenuClick }) {
                   startIcon={<AdminPanelSettings />}
                   active={isActivePath("/admin") ? 1 : 0}
                   sx={{
-                    px: { md: 1.5, lg: 2 },
-                    fontSize: { md: "0.85rem", lg: "0.95rem" },
+                    px: { md: 1, lg: 1.5 },
+                    fontSize: { md: "0.75rem", lg: "0.8rem" },
                   }}
                 >
                   مدیریت
@@ -485,7 +487,7 @@ export default function Navbar({ onMenuClick }) {
             sx={{
               display: "flex",
               alignItems: "center",
-              gap: { xs: 0.5, sm: 0.5, md: 1 },
+              gap: { xs: 0.3, sm: 0.3, md: 0.5 },
               flexShrink: 0,
             }}
           >
@@ -495,66 +497,9 @@ export default function Navbar({ onMenuClick }) {
                 onClick={() => navigate("/search")}
                 size="small"
               >
-                <Search sx={{ fontSize: { xs: 20, sm: 22 } }} />
+                <Search sx={{ fontSize: { xs: 18, sm: 20 } }} />
               </ActionIconButton>
             )}
-
-            {/* <ActionIconButton
-              onClick={() => navigate("/wishlist")}
-              size="small"
-            >
-              <Badge
-                badgeContent={5}
-                color="error"
-                sx={{
-                  "& .MuiBadge-badge": {
-                    fontSize: { xs: "0.5rem", sm: "0.6rem" },
-                    minWidth: { xs: 16, sm: 18 },
-                    height: { xs: 16, sm: 18 },
-                    borderRadius: "50%",
-                    backgroundColor: "#f44336",
-                  },
-                }}
-              >
-                <Favorite sx={{ fontSize: { xs: 20, sm: 22, md: 24 } }} />
-              </Badge>
-            </ActionIconButton>
-
-            <ActionIconButton onClick={handleOpenNotifications} size="small">
-              <Badge
-                badgeContent={3}
-                color="error"
-                sx={{
-                  "& .MuiBadge-badge": {
-                    fontSize: { xs: "0.5rem", sm: "0.6rem" },
-                    minWidth: { xs: 16, sm: 18 },
-                    height: { xs: 16, sm: 18 },
-                    borderRadius: "50%",
-                    background: "linear-gradient(135deg, #FF6F00, #FF8C00)",
-                  },
-                }}
-              >
-                <Notifications sx={{ fontSize: { xs: 20, sm: 22, md: 24 } }} />
-              </Badge>
-            </ActionIconButton>
-
-            <ActionIconButton onClick={() => navigate("/cart")} size="small">
-              <Badge
-                badgeContent={cartCount}
-                color="error"
-                sx={{
-                  "& .MuiBadge-badge": {
-                    fontSize: { xs: "0.5rem", sm: "0.6rem" },
-                    minWidth: { xs: 16, sm: 18 },
-                    height: { xs: 16, sm: 18 },
-                    borderRadius: "50%",
-                    background: "linear-gradient(135deg, #FF8C00, #FF6F00)",
-                  },
-                }}
-              >
-                <ShoppingCart sx={{ fontSize: { xs: 20, sm: 22, md: 24 } }} />
-              </Badge>
-            </ActionIconButton> */}
 
             <ActionIconButton
               onClick={toggleDarkMode}
@@ -562,9 +507,9 @@ export default function Navbar({ onMenuClick }) {
               sx={{ display: { xs: "none", sm: "flex" } }}
             >
               {isDark ? (
-                <LightMode sx={{ fontSize: { xs: 20, sm: 22, md: 24 } }} />
+                <LightMode sx={{ fontSize: { xs: 18, sm: 20, md: 22 } }} />
               ) : (
-                <DarkMode sx={{ fontSize: { xs: 20, sm: 22, md: 24 } }} />
+                <DarkMode sx={{ fontSize: { xs: 18, sm: 20, md: 22 } }} />
               )}
             </ActionIconButton>
 
@@ -574,8 +519,9 @@ export default function Navbar({ onMenuClick }) {
                   <StyledAvatar
                     onClick={handleOpenUserMenu}
                     sx={{
-                      width: { xs: 30, sm: 34, md: 38 },
-                      height: { xs: 30, sm: 34, md: 38 },
+                      width: { xs: 28, sm: 30, md: 34 },
+                      height: { xs: 28, sm: 30, md: 34 },
+                      fontSize: { xs: "0.7rem", sm: "0.8rem" },
                     }}
                   >
                     {getUserInitial()}
@@ -590,9 +536,9 @@ export default function Navbar({ onMenuClick }) {
                   TransitionComponent={Fade}
                   PaperProps={{
                     sx: {
-                      mt: 1.5,
-                      borderRadius: 3,
-                      minWidth: { xs: 220, sm: 260 },
+                      mt: 1,
+                      borderRadius: 2.5,
+                      minWidth: { xs: 200, sm: 240 },
                       boxShadow: isDark
                         ? "0 8px 40px rgba(0,0,0,0.5)"
                         : "0 8px 40px rgba(255,140,0,0.12)",
@@ -605,20 +551,20 @@ export default function Navbar({ onMenuClick }) {
                 >
                   <Box
                     sx={{
-                      p: { xs: 2, sm: 2.5 },
+                      p: { xs: 1.5, sm: 2 },
                       background:
                         "linear-gradient(135deg, #FF6F00 0%, #FF8C00 50%, #FFA726 100%)",
                       color: "white",
                     }}
                   >
                     <Typography
-                      variant="subtitle1"
+                      variant="subtitle2"
                       fontWeight={700}
-                      fontSize={{ xs: "0.9rem", sm: "1rem" }}
+                      fontSize={{ xs: "0.8rem", sm: "0.9rem" }}
                     >
                       {getFullName()}
                     </Typography>
-                    <Typography variant="caption" sx={{ opacity: 0.85 }}>
+                    <Typography variant="caption" sx={{ opacity: 0.85, fontSize: "0.65rem" }}>
                       {user?.role === "admin" ? "مدیر فروشگاه" : "کاربر"}
                     </Typography>
                     {user?.role === "admin" && (
@@ -626,13 +572,13 @@ export default function Navbar({ onMenuClick }) {
                         label="ادمین"
                         size="small"
                         sx={{
-                          mt: 1,
+                          mt: 0.5,
                           bgcolor: "rgba(255,255,255,0.2)",
                           color: "white",
                           fontWeight: 600,
                           borderRadius: 1,
-                          height: { xs: 20, sm: 24 },
-                          fontSize: { xs: "0.6rem", sm: "0.7rem" },
+                          height: { xs: 18, sm: 20 },
+                          fontSize: { xs: "0.5rem", sm: "0.6rem" },
                         }}
                       />
                     )}
@@ -695,25 +641,25 @@ export default function Navbar({ onMenuClick }) {
                 </Menu>
               </>
             ) : (
-              <Stack direction="row" spacing={0.5} sx={{ mr: 0.5 }}>
+              <Stack direction="row" spacing={0.3} sx={{ mr: 0.3 }}>
                 <Button
                   onClick={() => handleNavigate("/login")}
                   variant="outlined"
                   size="small"
                   sx={{
-                    borderRadius: 3,
+                    borderRadius: 2.5,
                     textTransform: "none",
-                    borderColor: isDark ? "rgba(255,255,255,0.2)" : "#FF8C00",
-                    color: isDark ? "rgba(255,255,255,0.8)" : "#FF8C00",
-                    px: { xs: 1.5, sm: 2 },
-                    py: 0.5,
-                    fontWeight: 600,
-                    fontSize: { xs: "0.7rem", sm: "0.8rem" },
+                    borderColor: isDark ? "rgba(255,255,255,0.15)" : "#FF8C00",
+                    color: isDark ? "rgba(255,255,255,0.7)" : "#FF8C00",
+                    px: { xs: 1, sm: 1.5 },
+                    py: 0.3,
+                    fontWeight: 500,
+                    fontSize: { xs: "0.65rem", sm: "0.7rem" },
                     "&:hover": {
                       borderColor: "#FF6F00",
                       bgcolor: isDark
                         ? "rgba(255,255,255,0.05)"
-                        : "rgba(255,140,0,0.08)",
+                        : "rgba(255,140,0,0.06)",
                     },
                   }}
                 >
@@ -724,17 +670,17 @@ export default function Navbar({ onMenuClick }) {
                   variant="contained"
                   size="small"
                   sx={{
-                    borderRadius: 3,
+                    borderRadius: 2.5,
                     textTransform: "none",
                     background:
                       "linear-gradient(135deg, #FF6F00, #FF8C00, #FFA726)",
-                    px: { xs: 1.5, sm: 2 },
-                    py: 0.5,
-                    fontWeight: 600,
-                    fontSize: { xs: "0.7rem", sm: "0.8rem" },
-                    boxShadow: "0 4px 15px rgba(255,140,0,0.3)",
+                    px: { xs: 1, sm: 1.5 },
+                    py: 0.3,
+                    fontWeight: 500,
+                    fontSize: { xs: "0.65rem", sm: "0.7rem" },
+                    boxShadow: "0 3px 12px rgba(255,140,0,0.25)",
                     "&:hover": {
-                      boxShadow: "0 6px 25px rgba(255,140,0,0.4)",
+                      boxShadow: "0 4px 20px rgba(255,140,0,0.35)",
                     },
                   }}
                 >

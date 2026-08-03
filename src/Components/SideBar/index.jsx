@@ -28,7 +28,6 @@ import {
   Person,
   Logout,
   Login,
-  AppRegistration,
   DarkMode,
   LightMode,
   Settings,
@@ -60,10 +59,10 @@ const NAVBAR_HEIGHT = {
 };
 
 const StyledDrawer = styled(Drawer)(({ theme }) => ({
-  width: 280,
+  width: 240,
   flexShrink: 0,
   "& .MuiDrawer-paper": {
-    width: 280,
+    width: 240,
     backgroundColor: theme.palette.mode === "dark" ? "#0a0a0a" : "#ffffff",
     borderRight: `1px solid ${theme.palette.mode === "dark" ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"}`,
     borderLeft: "none",
@@ -84,12 +83,35 @@ const StyledDrawer = styled(Drawer)(({ theme }) => ({
       right: 0,
       left: "auto",
     },
+    // استایل اسکرولبار
+    "&::-webkit-scrollbar": {
+      width: "4px",
+    },
+    "&::-webkit-scrollbar-track": {
+      background: "transparent",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      background: theme.palette.mode === "dark" 
+        ? "rgba(255,140,0,0.3)" 
+        : "rgba(255,140,0,0.2)",
+      borderRadius: "10px",
+      transition: "all 0.3s ease",
+    },
+    "&::-webkit-scrollbar-thumb:hover": {
+      background: theme.palette.mode === "dark" 
+        ? "rgba(255,140,0,0.5)" 
+        : "rgba(255,140,0,0.4)",
+    },
+    scrollbarWidth: "thin",
+    scrollbarColor: theme.palette.mode === "dark" 
+      ? "rgba(255,140,0,0.3) transparent" 
+      : "rgba(255,140,0,0.2) transparent",
   },
 }));
 
 const ProfileHeader = styled(Box)(({ theme }) => ({
   background: "linear-gradient(135deg, #FF6F00 0%, #FF8C00 50%, #FFA726 100%)",
-  padding: "24px 20px 32px 20px",
+  padding: "14px 12px 16px 12px",
   color: "white",
   position: "relative",
   overflow: "hidden",
@@ -117,9 +139,9 @@ const ProfileHeader = styled(Box)(({ theme }) => ({
 
 const CloseButton = styled(IconButton)(({ theme }) => ({
   position: "absolute",
-  top: 12,
-  right: 12,
-  padding: 8,
+  top: 8,
+  right: 8,
+  padding: 4,
   color: "rgba(255,255,255,0.7)",
   backgroundColor: "rgba(255,255,255,0.1)",
   backdropFilter: "blur(10px)",
@@ -133,9 +155,9 @@ const CloseButton = styled(IconButton)(({ theme }) => ({
 }));
 
 const StyledAvatar = styled(Avatar)(({ theme }) => ({
-  width: 56,
-  height: 56,
-  border: "3px solid rgba(255,255,255,0.3)",
+  width: 40,
+  height: 40,
+  border: "2.5px solid rgba(255,255,255,0.3)",
   backgroundColor: "rgba(255,255,255,0.2)",
   backdropFilter: "blur(10px)",
   boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
@@ -147,9 +169,9 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
 }));
 
 const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
-  borderRadius: "12px",
-  margin: "4px 12px",
-  padding: "10px 16px",
+  borderRadius: "8px",
+  margin: "1px 8px",
+  padding: "5px 10px",
   transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
   color:
     theme.palette.mode === "dark" ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.6)",
@@ -178,7 +200,7 @@ const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
     color: theme.palette.mode === "dark" ? "#ffffff" : "#000000",
   },
   "& .MuiListItemIcon-root": {
-    minWidth: 40,
+    minWidth: 30,
     color: "inherit",
     transition: "all 0.2s ease",
   },
@@ -189,19 +211,20 @@ const StyledListItem = styled(ListItem)(({ theme }) => ({
 }));
 
 const FooterBox = styled(Box)(({ theme }) => ({
-  padding: "16px 20px",
+  padding: "8px 12px",
   borderTop: `1px solid ${theme.palette.mode === "dark" ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"}`,
   marginTop: "auto",
 }));
 
 const ThemeToggleButton = styled(Button)(({ theme }) => ({
-  borderRadius: "12px",
-  padding: "10px 16px",
+  borderRadius: "8px",
+  padding: "5px 10px",
   justifyContent: "flex-start",
   color:
     theme.palette.mode === "dark" ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.6)",
   textTransform: "none",
   width: "100%",
+  fontSize: "0.75rem",
   "&:hover": {
     backgroundColor:
       theme.palette.mode === "dark"
@@ -209,7 +232,7 @@ const ThemeToggleButton = styled(Button)(({ theme }) => ({
         : "rgba(0,0,0,0.04)",
   },
   "& .MuiButton-startIcon": {
-    marginLeft: 12,
+    marginLeft: 8,
     marginRight: 0,
   },
 }));
@@ -333,19 +356,23 @@ export default function SideBar({ open, onClose }) {
       badge: "3",
     },
     {
+      text: "اسلاید ها",
+      icon: <ShoppingCart />,
+      path: "/slides",
+      badge: "3",
+    },
+    {
+      text: "کد تخفیف ها",
+      icon: <ShoppingCart />,
+      path: "/discount",
+      badge: "3",
+    },
+    {
       text: "فروش ویژه",
       icon: <Discount />,
       path: "/sales",
       badge: "🔥",
     },
-    
-    // {
-    //   text: "علاقه‌مندی‌ها",
-    //   icon: <Favorite />,
-    //   path: "/wishlist",
-    //   badge: "5",
-    // },
-    
   ];
 
   const userMenuItems = [
@@ -393,7 +420,7 @@ export default function SideBar({ open, onClose }) {
       >
         {isMobile && (
           <CloseButton onClick={onClose} aria-label="close drawer">
-            <Close sx={{ fontSize: 20 }} />
+            <Close sx={{ fontSize: 16 }} />
           </CloseButton>
         )}
 
@@ -401,8 +428,8 @@ export default function SideBar({ open, onClose }) {
           sx={{
             display: "flex",
             alignItems: "center",
-            gap: 2.5,
-            mt: isMobile ? 2 : 0,
+            gap: 1.5,
+            mt: isMobile ? 1 : 0,
             position: "relative",
             zIndex: 1,
           }}
@@ -413,7 +440,7 @@ export default function SideBar({ open, onClose }) {
             <Box
               sx={{
                 position: "absolute",
-                inset: -6,
+                inset: -4,
                 borderRadius: "50%",
                 background:
                   "conic-gradient(from 0deg, #FF6F00, #FF8C00, #FFA726, #FF6F00)",
@@ -430,7 +457,7 @@ export default function SideBar({ open, onClose }) {
             <Box
               sx={{
                 position: "absolute",
-                inset: -10,
+                inset: -8,
                 borderRadius: "50%",
                 background:
                   "radial-gradient(circle, rgba(255,140,0,0.15), transparent 70%)",
@@ -445,9 +472,9 @@ export default function SideBar({ open, onClose }) {
 
             <StyledAvatar
               sx={{
-                width: 76,
-                height: 76,
-                fontSize: "2rem",
+                width: 50,
+                height: 50,
+                fontSize: "1.3rem",
                 fontWeight: 800,
                 background:
                   "linear-gradient(135deg, #FF6F00, #FF8C00, #FFA726)",
@@ -473,10 +500,10 @@ export default function SideBar({ open, onClose }) {
               <Box
                 sx={{
                   position: "absolute",
-                  bottom: 2,
-                  right: 2,
-                  width: 16,
-                  height: 16,
+                  bottom: 0,
+                  right: 0,
+                  width: 12,
+                  height: 12,
                   borderRadius: "50%",
                   backgroundColor: "#4CAF50",
                   border: "3px solid #1a1a1a",
@@ -498,15 +525,15 @@ export default function SideBar({ open, onClose }) {
             {loggedIn ? (
               <>
                 <Typography
-                  variant="h5"
-                  fontWeight={800}
+                  variant="body1"
+                  fontWeight={700}
                   sx={{
                     textAlign: "right",
                     color: "#ffffff",
                     textShadow: "0 2px 10px rgba(0,0,0,0.5)",
                     letterSpacing: "0.5px",
-                    mb: 0.5,
-                    fontSize: { xs: "1.1rem", sm: "1.25rem" },
+                    mb: 0.2,
+                    fontSize: { xs: "0.9rem", sm: "1rem" },
                   }}
                 >
                   {getUserDisplayName(user)}
@@ -521,11 +548,11 @@ export default function SideBar({ open, onClose }) {
                   }}
                 >
                   <Typography
-                    variant="body2"
+                    variant="caption"
                     sx={{
                       color: "rgba(255,255,255,0.6)",
                       textAlign: "right",
-                      fontSize: "0.8rem",
+                      fontSize: "0.6rem",
                       width: "100%",
                     }}
                   >
@@ -538,9 +565,9 @@ export default function SideBar({ open, onClose }) {
                 {/* برچسب‌ها */}
                 <Stack
                   direction="row"
-                  spacing={0.5}
+                  spacing={0.3}
                   justifyContent="flex-end"
-                  sx={{ mt: 1 }}
+                  sx={{ mt: 0.3 }}
                 >
                   {admin && (
                     <Chip
@@ -551,8 +578,8 @@ export default function SideBar({ open, onClose }) {
                         color: "#FF8C00",
                         fontWeight: 700,
                         borderRadius: 1,
-                        fontSize: "0.6rem",
-                        height: 20,
+                        fontSize: "0.5rem",
+                        height: 16,
                         border: "1px solid rgba(255,140,0,0.2)",
                         backdropFilter: "blur(10px)",
                       }}
@@ -562,14 +589,15 @@ export default function SideBar({ open, onClose }) {
                     label={user?.isActive ? "🟢 فعال" : "🔴 غیرفعال"}
                     size="small"
                     sx={{
+                      textAlign:"end",
                       bgcolor: user?.isActive
                         ? "rgba(76,175,80,0.15)"
                         : "rgba(244,67,54,0.15)",
                       color: user?.isActive ? "#4CAF50" : "#f44336",
                       fontWeight: 600,
                       borderRadius: 1,
-                      fontSize: "0.6rem",
-                      height: 20,
+                      fontSize: "0.5rem",
+                      height: 16,
                     }}
                   />
                 </Stack>
@@ -577,23 +605,24 @@ export default function SideBar({ open, onClose }) {
             ) : (
               <>
                 <Typography
-                  variant="h5"
-                  fontWeight={800}
+                  variant="body1"
+                  fontWeight={700}
                   sx={{
                     textAlign: "right",
                     color: "#ffffff",
                     textShadow: "0 2px 10px rgba(0,0,0,0.5)",
-                    fontSize: { xs: "1.1rem", sm: "1.25rem" },
+                    fontSize: { xs: "0.9rem", sm: "1rem" },
                   }}
                 >
                   👋 مهمان عزیز
                 </Typography>
                 <Typography
-                  variant="body2"
+                  variant="caption"
                   sx={{
                     color: "rgba(255,255,255,0.5)",
                     textAlign: "right",
-                    mt: 0.5,
+                    mt: 0.2,
+                    fontSize: "0.6rem",
                   }}
                 >
                   برای استفاده از امکانات وارد شوید
@@ -606,9 +635,9 @@ export default function SideBar({ open, onClose }) {
         {!loggedIn && (
           <Stack
             direction="row"
-            spacing={1.5}
+            spacing={0.8}
             sx={{
-              mt: 2.5,
+              mt: 1.5,
               position: "relative",
               zIndex: 1,
             }}
@@ -618,13 +647,14 @@ export default function SideBar({ open, onClose }) {
               variant="outlined"
               fullWidth
               sx={{
-                gap:1 ,
-                py: 1.2,
+                gap: 0.3,
+                py: 0.8,
                 borderColor: "rgba(255,255,255,0.2)",
                 color: "#fff",
                 textTransform: "none",
                 fontWeight: 600,
-                borderRadius: 2,
+                borderRadius: 1.5,
+                fontSize: "0.7rem",
                 "&:hover": {
                   borderColor: "#FF8C00",
                   backgroundColor: "rgba(255,140,0,0.1)",
@@ -641,12 +671,13 @@ export default function SideBar({ open, onClose }) {
               variant="contained"
               fullWidth
               sx={{
-                py: 1.2,
+                py: 0.8,
                 background: "linear-gradient(135deg, #FF6F00, #FF8C00)",
                 color: "#fff",
                 textTransform: "none",
                 fontWeight: 700,
-                borderRadius: 2,
+                borderRadius: 1.5,
+                fontSize: "0.7rem",
                 boxShadow: "0 4px 20px rgba(255,140,0,0.3)",
                 "&:hover": {
                   background: "linear-gradient(135deg, #e65100, #e67e00)",
@@ -655,7 +686,6 @@ export default function SideBar({ open, onClose }) {
                 },
                 transition: "all 0.3s ease",
               }}
-              // endIcon={<AppRegistration />}
             >
               ثبت‌نام
             </Button>
@@ -663,8 +693,38 @@ export default function SideBar({ open, onClose }) {
         )}
       </ProfileHeader>
 
-      <Box sx={{ flex: 1, overflow: "auto", py: 1 }}>
-        <List sx={{ width: "100%" }}>
+      {/* بخش اسکرول‌دار با اسکرولبار سفارشی */}
+      <Box
+        sx={{
+          flex: 1,
+          overflow: "auto",
+          py: 0.5,
+          // استایل اسکرولبار
+          "&::-webkit-scrollbar": {
+            width: "3px",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: "transparent",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: isDark
+              ? "rgba(255,140,0,0.3)"
+              : "rgba(255,140,0,0.2)",
+            borderRadius: "10px",
+            transition: "all 0.3s ease",
+          },
+          "&::-webkit-scrollbar-thumb:hover": {
+            background: isDark
+              ? "rgba(255,140,0,0.5)"
+              : "rgba(255,140,0,0.4)",
+          },
+          scrollbarWidth: "thin",
+          scrollbarColor: isDark
+            ? "rgba(255,140,0,0.3) transparent"
+            : "rgba(255,140,0,0.2) transparent",
+        }}
+      >
+        <List sx={{ width: "100%", px: 0.5 }}>
           {mainMenuItems.map((item) => (
             <React.Fragment key={item.text}>
               {item.submenu ? (
@@ -674,8 +734,8 @@ export default function SideBar({ open, onClose }) {
                       selected={isActivePath(item.path)}
                       onClick={toggleShopSubmenu}
                       sx={{
-                        borderRadius: "12px",
-                        margin: "2px 12px",
+                        borderRadius: "6px",
+                        margin: "1px 6px",
                       }}
                     >
                       <ListItemIcon>{item.icon}</ListItemIcon>
@@ -684,7 +744,7 @@ export default function SideBar({ open, onClose }) {
                         sx={{
                           "& .MuiTypography-root": {
                             textAlign: "right",
-                            fontSize: "0.95rem",
+                            fontSize: "0.8rem",
                             fontWeight: isActivePath(item.path) ? 600 : 500,
                           },
                         }}
@@ -700,12 +760,12 @@ export default function SideBar({ open, onClose }) {
                             selected={isActivePath(subItem.path)}
                             onClick={() => handleNavigate(subItem.path)}
                             sx={{
-                              paddingLeft: 4,
-                              margin: "2px 12px",
-                              borderRadius: "12px",
+                              paddingLeft: 3.5,
+                              margin: "1px 6px",
+                              borderRadius: "6px",
                             }}
                           >
-                            <ListItemIcon sx={{ minWidth: 32 }}>
+                            <ListItemIcon sx={{ minWidth: 26 }}>
                               {subItem.icon || <Category />}
                             </ListItemIcon>
                             <ListItemText
@@ -713,7 +773,7 @@ export default function SideBar({ open, onClose }) {
                               sx={{
                                 "& .MuiTypography-root": {
                                   textAlign: "right",
-                                  fontSize: "0.85rem",
+                                  fontSize: "0.75rem",
                                   fontWeight: isActivePath(subItem.path)
                                     ? 600
                                     : 400,
@@ -739,9 +799,9 @@ export default function SideBar({ open, onClose }) {
                           color="error"
                           sx={{
                             "& .MuiBadge-badge": {
-                              fontSize: "0.7rem",
-                              minWidth: 20,
-                              height: 20,
+                              fontSize: "0.5rem",
+                              minWidth: 16,
+                              height: 16,
                               borderRadius: "50%",
                               background:
                                 "linear-gradient(135deg, #FF6F00, #FF8C00)",
@@ -759,13 +819,13 @@ export default function SideBar({ open, onClose }) {
                       sx={{
                         "& .MuiTypography-root": {
                           textAlign: "right",
-                          fontSize: "0.95rem",
+                          fontSize: "0.8rem",
                           fontWeight: isActivePath(item.path) ? 600 : 500,
                         },
                       }}
                     />
                     {item.badge === "🔥" && (
-                      <Typography sx={{ fontSize: "1rem" }}>🔥</Typography>
+                      <Typography sx={{ fontSize: "0.8rem" }}>🔥</Typography>
                     )}
                   </StyledListItemButton>
                 </StyledListItem>
@@ -776,23 +836,24 @@ export default function SideBar({ open, onClose }) {
 
         <Divider
           sx={{
-            mx: 2,
-            my: 1,
+            mx: 1.5,
+            my: 0.3,
             borderColor: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)",
           }}
         />
 
         {loggedIn && (
-          <List sx={{ width: "100%" }}>
+          <List sx={{ width: "100%", px: 0.5 }}>
             <Typography
               variant="caption"
               sx={{
-                px: 3,
-                py: 1,
+                px: 2,
+                py: 0.3,
                 display: "block",
                 opacity: 0.6,
                 fontWeight: 600,
                 textAlign: "right",
+                fontSize: "0.6rem",
               }}
             >
               حساب کاربری
@@ -809,7 +870,7 @@ export default function SideBar({ open, onClose }) {
                     sx={{
                       "& .MuiTypography-root": {
                         textAlign: "right",
-                        fontSize: "0.9rem",
+                        fontSize: "0.75rem",
                         fontWeight: isActivePath(item.path) ? 600 : 400,
                       },
                     }}
@@ -824,27 +885,28 @@ export default function SideBar({ open, onClose }) {
           <>
             <Divider
               sx={{
-                mx: 2,
-                my: 1,
+                mx: 1.5,
+                my: 0.3,
                 borderColor: isDark
                   ? "rgba(255,255,255,0.05)"
                   : "rgba(0,0,0,0.05)",
               }}
             />
-            <List sx={{ width: "100%" }}>
+            <List sx={{ width: "100%", px: 0.5 }}>
               <Typography
                 variant="caption"
                 sx={{
-                  px: 3,
-                  py: 1,
+                  px: 2,
+                  py: 0.3,
                   display: "block",
                   opacity: 0.6,
                   fontWeight: 600,
                   textAlign: "right",
+                  fontSize: "0.6rem",
                 }}
               >
                 <AdminPanelSettings
-                  sx={{ fontSize: 14, mr: 1, verticalAlign: "middle" }}
+                  sx={{ fontSize: 11, mr: 0.5, verticalAlign: "middle" }}
                 />
                 مدیریت
               </Typography>
@@ -860,7 +922,7 @@ export default function SideBar({ open, onClose }) {
                       sx={{
                         "& .MuiTypography-root": {
                           textAlign: "right",
-                          fontSize: "0.9rem",
+                          fontSize: "0.75rem",
                           fontWeight: isActivePath(item.path) ? 600 : 400,
                         },
                       }}
@@ -872,10 +934,10 @@ export default function SideBar({ open, onClose }) {
           </>
         )}
 
-        <Box sx={{ px: 2, py: 1 }}>
+        <Box sx={{ px: 1.5, py: 0.3 }}>
           <Divider
             sx={{
-              mb: 1,
+              mb: 0.3,
               borderColor: isDark
                 ? "rgba(255,255,255,0.05)"
                 : "rgba(0,0,0,0.05)",
@@ -883,17 +945,17 @@ export default function SideBar({ open, onClose }) {
           />
           <Stack
             direction="row"
-            spacing={1}
-            sx={{ flexWrap: "wrap", gap: 0.5, justifyContent: "flex-start" }}
+            spacing={0.3}
+            sx={{ flexWrap: "wrap", gap: 0.2, justifyContent: "flex-start" }}
           >
             <Button
               size="small"
               startIcon={<Help />}
               onClick={() => handleNavigate("/help")}
               sx={{
-                borderRadius: 2,
+                borderRadius: 1.5,
                 textTransform: "none",
-                fontSize: "0.75rem",
+                fontSize: "0.65rem",
                 color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.4)",
                 "&:hover": {
                   bgcolor: isDark
@@ -909,9 +971,9 @@ export default function SideBar({ open, onClose }) {
               startIcon={<ContactSupport />}
               onClick={() => handleNavigate("/contact")}
               sx={{
-                borderRadius: 2,
+                borderRadius: 1.5,
                 textTransform: "none",
-                fontSize: "0.75rem",
+                fontSize: "0.65rem",
                 color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.4)",
                 "&:hover": {
                   bgcolor: isDark
@@ -939,14 +1001,15 @@ export default function SideBar({ open, onClose }) {
             onClick={handleLogout}
             startIcon={<Logout />}
             sx={{
-              borderRadius: "12px",
-              padding: "10px 16px",
+              borderRadius: "6px",
+              padding: "5px 10px",
               justifyContent: "flex-start",
               color: "#f44336",
               textTransform: "none",
               width: "100%",
-              mt: 1,
-              gap: 1,
+              mt: 0.3,
+              gap: 0.3,
+              fontSize: "0.75rem",
               "&:hover": {
                 backgroundColor: "rgba(244, 67, 54, 0.08)",
               },
@@ -958,14 +1021,15 @@ export default function SideBar({ open, onClose }) {
 
         <Box
           sx={{
-            mt: 2,
+            mt: 1,
             textAlign: "center",
             typography: "caption",
+            fontSize: "0.6rem",
             color: isDark ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.3)",
           }}
         >
           <Storefront
-            sx={{ fontSize: 16, verticalAlign: "middle", color: "#FF8C00" }}
+            sx={{ fontSize: 12, verticalAlign: "middle", color: "#FF8C00" }}
           />
           فروشگاه من v1.0
         </Box>
@@ -988,12 +1052,29 @@ export default function SideBar({ open, onClose }) {
         sx={{
           display: { xs: "block", md: "none" },
           "& .MuiDrawer-paper": {
-            width: 300,
+            width: 280,
             backgroundColor: isDark ? "#0a0a0a" : "#ffffff",
             direction: "rtl",
             boxShadow: isDark
               ? "-4px 0 30px rgba(0,0,0,0.5)"
               : "-4px 0 30px rgba(255,140,0,0.12)",
+            // استایل اسکرولبار برای موبایل
+            "&::-webkit-scrollbar": {
+              width: "3px",
+            },
+            "&::-webkit-scrollbar-track": {
+              background: "transparent",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              background: isDark
+                ? "rgba(255,140,0,0.3)"
+                : "rgba(255,140,0,0.2)",
+              borderRadius: "10px",
+            },
+            scrollbarWidth: "thin",
+            scrollbarColor: isDark
+              ? "rgba(255,140,0,0.3) transparent"
+              : "rgba(255,140,0,0.2) transparent",
           },
         }}
       >
@@ -1009,7 +1090,7 @@ export default function SideBar({ open, onClose }) {
       open={true}
       sx={{
         display: { xs: "none", md: "block" },
-        width: 280,
+        width: 240,
         flexShrink: 0,
       }}
     >
