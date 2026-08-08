@@ -462,6 +462,7 @@ export default function Brands() {
         onClick={() => navigate("/createBrand")}
         endIcon={!isXs && <Add />}
         sx={{
+          gap:1 ,
           minWidth: isXs ? 'auto' : undefined,
           fontSize: { xs: '0.8rem', sm: '0.9rem' },
           px: { xs: 2, sm: 3 },
@@ -713,7 +714,7 @@ export default function Brands() {
           </Box>
           
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexShrink: 0 }}>
-            <FilterChip
+            {/* <FilterChip
               icon={<NewReleases />}
               label="جدیدترین"
               active={sortBy === 'newest'}
@@ -724,9 +725,9 @@ export default function Brands() {
               label="محبوب‌ترین"
               active={sortBy === 'popular'}
               onClick={() => setSortBy('popular')}
-            />
+            /> */}
             
-            <Divider orientation="vertical" flexItem sx={{ mx: 0.5 }} />
+            <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
             
             <IconButton
               onClick={() => setViewMode('grid')}
