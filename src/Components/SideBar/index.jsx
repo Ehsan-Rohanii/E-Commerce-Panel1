@@ -793,9 +793,9 @@ export default function SideBar({ open, onClose }) {
                     onClick={() => handleNavigate(item.path)}
                   >
                     <ListItemIcon>
-                      {item.badge && !item.badge.includes("🔥") ? (
+                      {item.badge && !item.badge.includes("") ? (
                         <Badge
-                          badgeContent={item.badge}
+                          // badgeContent={item.badge}
                           color="error"
                           sx={{
                             "& .MuiBadge-badge": {
@@ -824,7 +824,7 @@ export default function SideBar({ open, onClose }) {
                         },
                       }}
                     />
-                    {item.badge === "🔥" && (
+                    {item.badge === "" && (
                       <Typography sx={{ fontSize: "0.8rem" }}>🔥</Typography>
                     )}
                   </StyledListItemButton>
