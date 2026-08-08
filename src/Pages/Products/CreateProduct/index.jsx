@@ -33,7 +33,7 @@ export default function CreateProduct() {
     categoryId: '', // تغییر به تک انتخابی
     tags: [],
     isPublished: true,
-    inStock: true,
+    // inStock: true,
   });
 
   const [variant, setVariant] = useState({
@@ -218,11 +218,13 @@ export default function CreateProduct() {
         quantity: variant.quantity,
         price: variant.price,
         discountPercent: variant.discountPercent,
+        finalPrice:2,
+        boughtCount:2,
       };
 
       console.log('📤 Variant Payload:', variantPayload);
 
-      const variantRes = await fetch('http://localhost:5000/api/product-variant', {
+      const variantRes = await fetch('http://localhost:5000/product-variant', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
