@@ -327,7 +327,7 @@ export default function Navbar({ onMenuClick }) {
     { text: "محصولات", icon: <Category />, path: "/products" },
     { text: "دسته‌بندی‌ها", icon: <Category />, path: "/categories" },
     { text: "برند ها", icon: <BrandingWatermark />, path: "/brands" },
-    { text: "فروش ویژه", icon: <Discount />, path: "/sales" },
+    // { text: "فروش ویژه", icon: <Discount />, path: "/sales" },
   ];
 
   return (
@@ -466,7 +466,7 @@ export default function Navbar({ onMenuClick }) {
                 />
               </Box>
 
-              {admin && (
+              {/* {admin && (
                 <AdminButton
                   onClick={() => handleNavigate("/admin")}
                   startIcon={<AdminPanelSettings />}
@@ -478,7 +478,7 @@ export default function Navbar({ onMenuClick }) {
                 >
                   مدیریت
                 </AdminButton>
-              )}
+              )} */}
             </Box>
           )}
 
@@ -513,7 +513,7 @@ export default function Navbar({ onMenuClick }) {
               )}
             </ActionIconButton>
 
-            {loggedIn ? (
+            {/* {loggedIn ? (
               <>
                 <Tooltip title="حساب کاربری" arrow>
                   <StyledAvatar
@@ -687,7 +687,7 @@ export default function Navbar({ onMenuClick }) {
                   {isSmallMobile ? "ثبت‌نام" : "ثبت‌نام"}
                 </Button>
               </Stack>
-            )}
+            )} */}
           </Box>
         </Toolbar>
       </Container>
