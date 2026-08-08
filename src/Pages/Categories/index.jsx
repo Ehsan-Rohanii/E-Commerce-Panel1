@@ -732,7 +732,7 @@ export default function Categories() {
           </Box>
           
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, flexShrink: 0 }}>
-            <FilterChip
+            {/* <FilterChip
               icon={<NewReleases sx={{ fontSize: '1rem' }} />}
               label="جدیدترین"
               active={sortBy === 'newest'}
@@ -743,7 +743,7 @@ export default function Categories() {
               label="محبوب‌ترین"
               active={sortBy === 'popular'}
               onClick={() => setSortBy('popular')}
-            />
+            /> */}
             
             <Divider orientation="vertical" flexItem sx={{ mx: 0.3 }} />
             
